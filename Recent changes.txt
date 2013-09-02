@@ -1,1 +1,1 @@
-Generating the SVG path element from edge data.
+Added functions for accessing parts of a command and for simplifying edge data by removing redundant `moveTo`.
