@@ -28,7 +28,7 @@ edges.each { |edge| p edge }
 
 
 # For starters, let's just read the edge data into a nested array of commands.
-# Each item of this array has the format: `[ command [ parameters ] ]`
+# Each item of this array has the format: `[ command, *parameters ]`
 # where `parameters` are just coordinate numbers.
 # We will also use human-readable names (Ruby symbols for efficiency) for the commands.
 
@@ -40,7 +40,7 @@ p edgeData
 
 # Converts XFL opcodes to human-readable symbols.
 def cmdToSym(cmdstr)
-	return {'!' => :moveTo, '|' => :lineTo, '/' => :lineTo, '[' => :curveTo, '(' => :cubicTo }[cmdstr]
+	return { '!' => :moveTo, '|' => :lineTo, '/' => :lineTo, '[' => :curveTo, '(' => :cubicTo }[cmdstr]
 end
 
 # Converts 32-bit fixed-point number from hexadecimal string to its corresponding number.
@@ -63,7 +63,27 @@ def edgeData2arr(edgeData)
 end
 
 puts "\ninto this:"
-p edgeData2arr(edgeData)
+edgeArr = edgeData2arr(edgeData)
+p edgeArr
 
 
-# TODO: Next step: Parsing edge data.
+# Let's try to spit it out as SVG path.
+
+# Converts the command symbol to SVG vector command.
+def cmdSymToSVG(cmdsym)
+	return { :moveTo => 'M', :lineTo => 'L', :curveTo => 'Q', :cubicTo => 'C' }[cmdsym]
+end
+
+# Create an SVG path element from the given array with edge data.
+def SVG_path(edgeArr)
+	pathElem = XML::Node.new('path')
+	pathElem['d'] = edgeArr.map { |cmd,*ops| [ cmdSymToSVG(cmd), *ops ] }.join(' ')
+	return pathElem
+end
+
+puts "\nConverting to SVG path:"
+pathElem = SVG_path(edgeArr)
+p pathElem
+
+
+# TODO: Next step: Simplify the SVG path from redundant moveTo's.
