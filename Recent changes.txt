@@ -1,1 +1,4 @@
-Added functions for accessing parts of a command and for simplifying edge data by removing redundant `moveTo`.
+Some cleanup.
+The helper functions have been refactored into separate source files: `SVG/path.rb` and `XFL/edge.rb`.
+The former contains functions for spitting out edges as SVG paths.
+The latter contains code for manipulating edge data.
