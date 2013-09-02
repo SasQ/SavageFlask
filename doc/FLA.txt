@@ -1,0 +1,85 @@
+FLA FILE FORMAT DESCRIPTION (REVERSE-ENGINEERED)
+""""""""""""""""""""""""""""""""""""""""""""""""
+XFL files (with `.xfl` extension) are custom flavor XML syntax files which store Adobe Flash projects' uncompressed data.
+
+All library symbols are stored in separate XFL files.
+Their names and locations in the directory tree reflect their locations and names in Flash IDE.
+
+The root element of symbol files is `DOMSymbolItem`.
+The type of the symbol is stored in its `symbolType` attribute (e.g. `graphic`).
+It also has a name (the `name` attribute), the same as its name in Flash IDE library.
+
+Inside this root element there is the `timeline` element, which stores the timelines (one or more) -- elements of type `DOMTimeline`.
+
+Each timeline may have several layers (`DOMLayer` elements) wrapped in the `layers` element.
+They have names (`name` attribute) and colors visible in the Flash IDE (`color` attribute).
+
+`DOMLayer` element can have the subsequent animation frames for the timeline (`DOMFrame` elements) wrapped i the `frames` element.
+Each frame is a `DOMFrame` element and it has a sequential number (`index` attribute) which distinguishes it from other frames.
+
+And finally, inside the `DOMFrame` element there are the elements constituting the actual visible image of the symbol.
+They all reside inside the `elements` element. There could be two kinds of them:
+
+1.	`DOMSymbolInstance`
+	These are the library symbols embedded from the external library (i.e. another `.xfl` file).
+	Which symbol to embed is specified by its library name set in the `libraryItemName` attribute.
+	The `name` attribute is the name of this particular instance of the library symbol.
+	The `symbolType` attribute specifies the type of the imported symbol (e.g. `graphic`).
+	{I wonder why, since it's already specified in the symbol definition file itself? :-P}
+	The `loop` attribute tells the way the animation is played (e.g. `single frame`).
+	
+	This element can contain `matrix` elements (transformation matrices) and a `transformationPoint` element (the pivot point, I guess).
+	
+2. `DOMShape`
+	This is a definition of a new symbol as a shape. (There might be some other types, I guess, e.g. Movie Clips).
+	
+	It can contain elements of type:
+	`fills`: fill style definitions.
+	`edges`: they define the common edges between filled areas.
+
+	Each of these elements is a group containing sub-elements.
+	
+	Fill styles
+	'''''''''''
+	E.g. the `fills` element can contain `FillStyle` elements, each with an `index` attribute which identifies it for reference purposes.
+	Inside the `FillStyle` element there could be other elements specifying the particular fill style.
+	E.g. `SolidColor` element with its `color` attribute describes the solid color fill.
+	One can also fill with gradients.
+	
+	Common edges
+	''''''''''''
+	The `edges` element, on the other hand, contains `Edge` elements.
+	Each of them stores information about one common edge between two areas of different fill style.
+	Common edges are stored only once, as a single `Edge` element, and they are shared by two fill shapes.
+	If a particular filled region neighbors with several others, its contour is divided into several separate edges
+	at the points where more than two colors meet. Each edge between only two filled regions.
+	The `fillStyle0` and `fillStyle1` attributes refer to the fill styles on the left and right of the common edge, respectively.
+	The `strokeStyle` atribute describes the stroke style for the line. Styles are defined inside the `StrokeStyle` elements.
+	
+	The `edges` atribute of the `Edge` element contains a character string describing the shape of the edge.
+	It is a stream of vector commands along with numerical coordinates which are parameters to them.
+	
+	Coordinate numbers
+	''''''''''''''''''
+	All coordinates are specified as absolute fixed-point numbers and they are scaled up (multiplied) by 20.
+	{That is, Flash's accuracy is to 1/20 of the pixel (0.05), which is pretty lame.}
+	Therefore to get the correct coordinates, one needs to divide them by 20 (or multiply by 0.05).
+	They could be converted into relative coordinates if it simplifies the matter anyhow.
+	
+	If the number is prepended by '#', it means that it is a signed (2's complement) fixed-point 32-bit number stored in a hexadecimal form.
+	It contains the '.' between the integer and fractional parts.
+	To get the numerical value, join all the digits into single number, convert to decimal, and divide by 256 (or shift right by 8 bits).
+	For example, the correct result for '#BD9.4D' is 3033.30078125, because:
+	>> 'BD94D'.hex.to_f / 256 == 3033.30078125
+	But be careful that the number '#19F.2' is actually 00019F20 in hexadecimal.
+	If there's only one hexadecimal digit after the fractional point, either append '0' before dividing by 256, or divide just by 16.
+	Also be careful that if the leftmost digit is '8' or greater, you need to account for the negative sign:
+	Just subtract the number from FFFFFFFF and add 1 to get its absolute value, and then change its sign to negative.
+	
+	Vector commands
+	'''''''''''''''
+	The vector commands are:
+	 !x y			moveTo(x,y)					Moves the pen over the canvas to the (x,y) point without drawing anything (pen up).
+	 |x y			lineTo(x,y)					Draws a straight line from the current position of the pen to the (x,y) point.
+	 [cx cy x y		quadraticTo(cx,cy,x,y)		Draws a quadratic spline to the point (x,y) with control point at (cx,cy).
+	 ...
