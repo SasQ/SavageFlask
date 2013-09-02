@@ -1,0 +1,12 @@
+Added functions to convert edge data string into an array of commands with operands.
+Those functions are:
+
+	cmdToSym(cmdstr)
+		Converts XFL vector command into a human-readable symbol (also for efficiency).
+	
+	hexToNum(hexstr)
+		Converts 32-bit fixed-point number from hexadecimal string to its corresponding number.
+	
+	edgeData2arr(edgeData)
+		Reads XFL edge data string into a nested array.
+		Numbers are already decoded as floating point values with correct scale.
