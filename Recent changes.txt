@@ -1,4 +1,8 @@
-Some cleanup.
-The helper functions have been refactored into separate source files: `SVG/path.rb` and `XFL/edge.rb`.
-The former contains functions for spitting out edges as SVG paths.
-The latter contains code for manipulating edge data.
+Vector drawing commands are now full-blown objects instead of just a bunch of nested arrays.
+Each of them is an object of a particular class from the `XFL::Command` module (defined in a separate file).
+The coordinates are stored as instance objects of class `Geom::Point` (defined in `geom.rb`).
+This facilitates querying these data and comparing them.
+Functions from modules `XFL::Edge` and `SVG` has been rewritten to suppor this new format of storing edge data.
+Now the outputs from `p` for arrays of commands are a bit more messy.
+Nevertheless they are not supposed to be viewed directly, so this is not much a problem.
+Maybe I'll add some pretty printer for it in some near future if it will be needed from some reason.

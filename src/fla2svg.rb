@@ -24,20 +24,33 @@ doc = parser.parse
 # We need to set it up as the default namespace for XPath queries to work.
 doc.root.namespaces.default_prefix = 'xfl'
 
-
 # Find all `Edge` elements with `edges` attribute.
 edges = doc.root.find('//xfl:Edge[@edges]')
 
-require 'XFL/edge'
 
-puts "Edges:"
-edges.each { |edge| p edge }
+# Some tests of the new classes for commands and points.
+require './geom'
+require './XFL/edge'
+require './XFL/commands'
+
+mt = XFL::Command::MoveTo.new(10,20)
+lt = XFL::Command::LineTo.new( Geom::Point.new(10,20) )
+ct = XFL::Command::CurveTo.new( Geom::Point.new(30,40), Geom::Point.new(50,60) )
+puts "MoveTo(#{mt.endPoint.x.to_s},#{mt.endPoint.y.to_s})"
+puts "LineTo(#{lt.endPoint.x.to_s},#{lt.endPoint.y.to_s})"
+puts "CurveTo(#{ct.controlPoint.x.to_s},#{ct.controlPoint.y.to_s},#{ct.endPoint.x.to_s},#{ct.endPoint.y.to_s})"
+print 'Same endpoints for MoveTo and LineTo? ';  p mt.endPoint == lt.endPoint
+print 'Same endpoints for MoveTo and CurveTo? '; p mt.endPoint == ct.endPoint
+puts
 
 
 # For starters, let's just read the edge data into a nested array of commands.
 # Each command is an array of the form: `[ opcode, *parameters ]`
 # where `parameters` is just a series of coordinate numbers.
 # We will also use Ruby symbols for the opcodes, for better readability and efficiency.
+
+puts "Edges:"
+edges.each { |edge| p edge }
 
 # Let's try it on the first edge.
 edgeData = edges[0]['edges']
@@ -55,14 +68,10 @@ XFL::Edge::simplifyPath!(edgeArr)
 
 
 # Let's try to spit it out as SVG path.
-require 'SVG/path'
+require './SVG/path'
 puts "\nConverting to SVG path:"
 pathElem = SVG::path(edgeArr)
 p pathElem
-
-
-#XFL::Edge::hexToNum('a9')            # cannot call, private (good)
-#XFL::Edge::cmdOp([:moveTo, 10,20])   # cannot call, private (good)
 
 
 # TODO: Next step: Commands as objects maybe?
