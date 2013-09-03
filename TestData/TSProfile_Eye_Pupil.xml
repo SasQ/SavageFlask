@@ -1,0 +1,26 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Twilight Profile Puppet Parts/ TSProfile ► Head Parts/TSProfile ► Eye ► Pupil" itemID="4f9c43d9-000008a2" symbolType="graphic" lastModified="1335641049">
+  <timeline>
+    <DOMTimeline name="TSProfile ► Eye ► Pupil">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor/>
+                    </FillStyle>
+                  </fills>
+                  <edges>
+                    <Edge fillStyle1="1" edges="!131 -9S2[134 70 96 128!96 128[60 186 6 190!6 190[-49 194 -89 140!-89 140[-129 87 -131 9!-131 9[-134 -70 -97 -129!-97 -129[-60 -187 -6 -190!-6 -190[48 -193 88 -141!88 -141[129 -87 131 -9"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

@@ -1,0 +1,26 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Twilight Profile Puppet Parts/ TSProfile ► Head Parts/TSProfile ► Sclera" itemID="4f9c43e6-000008aa" symbolType="graphic" lastModified="1335641062">
+  <timeline>
+    <DOMTimeline name="TSProfile ► Sclera">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#FFFFFF"/>
+                    </FillStyle>
+                  </fills>
+                  <edges>
+                    <Edge fillStyle1="1" edges="!180 -177S2[215 -109 199 6!199 6[185 116 108 184!108 184[38 248 -58 253!-58 253[-121 257 -198 234!-198 234[-213 82 -193 -6!-193 -6[-169 -112 -92 -184!-92 -184[-16 -257 63 -255!63 -255[140 -253 180 -177"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

@@ -60,7 +60,9 @@ puts "\nConverting to SVG path:"
 pathElem = SVG::path(edgeArr)
 p pathElem
 
-#XFL::Edge::hexToNum('a9')    # cannot call, private (good)
+
+#XFL::Edge::hexToNum('a9')            # cannot call, private (good)
+#XFL::Edge::cmdOp([:moveTo, 10,20])   # cannot call, private (good)
 
 
 # TODO: Next step: Commands as objects maybe?

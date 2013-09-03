@@ -5,16 +5,17 @@ module XFL
 	# Handling vector drawing commands.
 	# TODO: This definitely should be converted into a class.
 	module Command
+		extend self
 		
 		
 		# Return the command's opcode.
-		def self.cmdOp(cmd)
+		def cmdOp(cmd)
 			return cmd[0]  # First item is the opcode.
 		end
 		
 		
 		# Return the command's destination point.
-		def self.cmdTo(cmd)
+		def cmdTo(cmd)
 			return cmd[-2..-1]  # Last two numbers are always the endpoint.
 		end
 		
@@ -26,7 +27,8 @@ module XFL
 	
 	# Handling edges.
 	module Edge
-		
+		extend Command  # Allows using `Command`'s functions without the need for full qualification.
+		private_class_method *Command.public_instance_methods  # Makes this implementation detail invisible to the outside world.
 		
 		# Convert XFL opcodes to human-readable symbols.
 		def self.opStrToSym(opcodeStr)
@@ -60,9 +62,9 @@ module XFL
 		# it is redundant and can be safely removed.
 		def self.simplifyPath!(edgeArr)
 			edgeArr.each_with_index do |cmd,index|
-				next unless Command::cmdOp(cmd) == :moveTo or index > 0
+				next unless cmdOp(cmd) == :moveTo or index > 0
 				prevCmd = edgeArr[index-1]
-				edgeArr.delete_at(index) if Command::cmdTo(prevCmd) == Command::cmdTo(cmd)
+				edgeArr.delete_at(index) if cmdTo(prevCmd) == cmdTo(cmd)
 			end
 		end
 		

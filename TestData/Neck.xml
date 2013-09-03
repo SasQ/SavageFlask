@@ -1,0 +1,53 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Twilight Profile Puppet Parts/ TSProfile ► Body Parts/TSProfile ► Neck" itemID="4fd65763-0000208f" symbolType="graphic" lastModified="1335641399">
+  <timeline>
+    <DOMTimeline name="TSProfile ► Neck">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#D19FE4"/>
+                    </FillStyle>
+                    <FillStyle index="2">
+                      <SolidColor color="#16224A"/>
+                    </FillStyle>
+                  </fills>
+                  <strokes>
+                    <StrokeStyle index="1">
+                      <SolidStroke scaleMode="normal" weight="1.3">
+                        <fill>
+                          <SolidColor color="#A66BBF"/>
+                        </fill>
+                      </SolidStroke>
+                    </StrokeStyle>
+                  </strokes>
+                  <edges>
+                    <Edge fillStyle0="1" strokeStyle="1" edges="!249 -473S5[251 -511 226 -568!226 -568[197 -630 147 -677!147 -677[15 -801 -171 -741!-171 -741[-336 -688 -382 -519!-382 -519[-401 -452 -393 -385!-393 -385[-385 -320 -356 -282!-356 -282[-349 -272 -288 -199!-288 -199[-245 -147 -222 -109
+!-222 -109[-154 2 -178 112!-178 112[-221 307 -170 481!-170 481[-106 695 83 761"/>
+                    <Edge fillStyle0="1" edges="
+!83 761S1[196 766 229 627!229 627[239 580 249 479!249 479[261 354 269 304"/>
+                    <Edge fillStyle0="1" fillStyle1="2" strokeStyle="1" edges="
+!269 304S7[230 148 230 -63!230 -63[230 -191 249 -473"/>
+                    <Edge fillStyle1="2" edges="
+!249 -473S2[266 -109 361 66!361 66[458 287 269 304"/>
+                    <Edge cubics="!83 761(;-196,664 -225,326 -178,112q83 761Q-106 695q-170 481Q-221 307q-178 112);"/>
+                    <Edge cubics="!249 -473(;229,-183 211,71 269,304q249 -473Q230 -191q230 -63Q230 148q269 304);"/>
+                    <Edge cubics="!-178 112(;-140,-60 -274,-174 -356,-282q-178 112Q-154 2q-222 -109Q-245 -147q-288 -199Q-349 -272q-356 -282);"/>
+                    <Edge cubics="!-171 -741(;-412,-663 -432,-382 -356,-282q-171 -741Q-336 -688q-382 -519Q-401 -452q-393 -385Q-385 -320q-356 -282);"/>
+                    <Edge cubics="!249 -473(;255,-568 111,-833 -171,-741q249 -473Q251 -511q226 -568Q197 -630q147 -677Q15 -801q-171 -741);"/>
+                    <Edge cubics="!269 304(;395,293 425,214 361,66q269 304Q458 287q361 66);"/>
+                    <Edge cubics="!249 -473(;260,-230 298,-50 361,66q249 -473Q266 -109q361 66);"/>
+                    <Edge cubics="!269 304(;232,547 260,769 83,761q269 304Q261 354q249 479Q239 580q229 627Q196 766q83 761);"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

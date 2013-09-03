@@ -19,7 +19,3 @@ _yardoc
 # Editor's temporary files
 *.*~
 *.bak
-
-# Test data and outputs
-TestData/
-TestOutputs/

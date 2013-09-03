@@ -1,0 +1,31 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Twilight Profile Puppet Parts/ TSProfile ► Head Parts/TSProfile ► Horn" itemID="4fd65761-00002080" symbolType="graphic" lastModified="1335640576">
+  <timeline>
+    <DOMTimeline name="TSProfile ► Horn">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#A66BBF"/>
+                    </FillStyle>
+                    <FillStyle index="2">
+                      <SolidColor color="#D19FE4"/>
+                    </FillStyle>
+                  </fills>
+                  <edges>
+                    <Edge fillStyle0="1" fillStyle1="2" edges="!22 -53S3|159 91!159 91[134 171 18 189!18 189[-15 140 -51 73!-51 73[18 36 22 -52!22 -52|22 -53"/>
+                    <Edge fillStyle1="1" edges="!12 220S2|3 221!3 221|-3 214!-3 214[-39 159 -81 82!-81 82|-147 -49!-147 -49[-218 -199 -178 -216!-178 -216[-147 -237 -74 -182!-74 -182[-45 -160 -8 -125!-8 -125|192 82!192 82|190 90!190 90[166 200 12 220"/>
+                    <Edge fillStyle0="1" fillStyle1="2" edges="!-84 -150S3[-75 -95 -122 -67!-122 -67[-176 -181 -164 -190!-164 -190[-145 -198 -92 -157!-92 -157|-84 -150!-117 -58[-69 -87 -73 -141!-73 -141|12 -62!12 -62[12 28 -56 64!-56 64|-118 -58!-118 -58|-117 -58"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>
