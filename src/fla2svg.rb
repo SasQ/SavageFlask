@@ -33,12 +33,15 @@ require './geom'
 require './XFL/edge'
 require './XFL/commands'
 
-mt = XFL::Command::MoveTo.new(10,20)
-lt = XFL::Command::LineTo.new( Geom::Point.new(10,20) )
-ct = XFL::Command::CurveTo.new( Geom::Point.new(30,40), Geom::Point.new(50,60) )
-puts "MoveTo(#{mt.endPoint.x.to_s},#{mt.endPoint.y.to_s})"
-puts "LineTo(#{lt.endPoint.x.to_s},#{lt.endPoint.y.to_s})"
-puts "CurveTo(#{ct.controlPoint.x.to_s},#{ct.controlPoint.y.to_s},#{ct.endPoint.x.to_s},#{ct.endPoint.y.to_s})"
+include XFL
+include Geom
+
+mt = Command::MoveTo.new(10,20)
+lt = Command::LineTo.new( [10,20] )
+ct = Command::CurveTo.new( Point.new(30,40), Point.new(50,60) )
+puts "MoveTo(#{mt.endPoint.x},#{mt.endPoint.y})"
+puts "LineTo(#{lt.endPoint.x},#{lt.endPoint.y})"
+puts "CurveTo(#{ct.controlPoint.x},#{ct.controlPoint.y},#{ct.endPoint.x},#{ct.endPoint.y})"
 print 'Same endpoints for MoveTo and LineTo? ';  p mt.endPoint == lt.endPoint
 print 'Same endpoints for MoveTo and CurveTo? '; p mt.endPoint == ct.endPoint
 puts
@@ -59,12 +62,12 @@ puts "\nConverting this:"
 p edgeData
 
 puts "\ninto this:"
-edgeArr = XFL::Edge::edgeData2arr(edgeData)
+edgeArr = Edge::edgeData2arr(edgeData)
 p edgeArr
 
 
 # Simplify the path data.
-XFL::Edge::simplifyPath!(edgeArr)
+Edge::simplifyPath!(edgeArr)
 
 
 # Let's try to spit it out as SVG path.

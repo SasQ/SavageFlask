@@ -20,4 +20,4 @@ module Geom
 		end
 	end
 	
-end
+end  # module Geom
