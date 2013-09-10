@@ -1,8 +1,5 @@
-Vector drawing commands are now full-blown objects instead of just a bunch of nested arrays.
-Each of them is an object of a particular class from the `XFL::Command` module (defined in a separate file).
-The coordinates are stored as instance objects of class `Geom::Point` (defined in `geom.rb`).
-This facilitates querying these data and comparing them.
-Functions from modules `XFL::Edge` and `SVG` has been rewritten to suppor this new format of storing edge data.
-Now the outputs from `p` for arrays of commands are a bit more messy.
-Nevertheless they are not supposed to be viewed directly, so this is not much a problem.
-Maybe I'll add some pretty printer for it in some near future if it will be needed from some reason.
+Changing Commands and `Geom::Point` to derive from `Struct` to further clean up the design.
+Pretty printing for Commands.
+
+Documentation:
+Added a picture explaining the shared edges technique used by Flash to store common edge data.

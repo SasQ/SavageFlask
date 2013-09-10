@@ -36,12 +36,9 @@ require './XFL/commands'
 include XFL
 include Geom
 
-mt = Command::MoveTo.new(10,20)
-lt = Command::LineTo.new( [10,20] )
-ct = Command::CurveTo.new( Point.new(30,40), Point.new(50,60) )
-puts "MoveTo(#{mt.endPoint.x},#{mt.endPoint.y})"
-puts "LineTo(#{lt.endPoint.x},#{lt.endPoint.y})"
-puts "CurveTo(#{ct.controlPoint.x},#{ct.controlPoint.y},#{ct.endPoint.x},#{ct.endPoint.y})"
+p mt = Command::MoveTo.new(10,20)
+p lt = Command::LineTo.new( [10,20] )
+p ct = Command::CurveTo.new( Point.new(30,40), Point.new(50,60) )
 print 'Same endpoints for MoveTo and LineTo? ';  p mt.endPoint == lt.endPoint
 print 'Same endpoints for MoveTo and CurveTo? '; p mt.endPoint == ct.endPoint
 puts

@@ -2,22 +2,28 @@
 module Geom
 	
 	# Stores coordinates of a 2D point.
-	class Point
-		attr_accessor :x, :y
+	class Point < Struct.new(:x, :y)
 		
 		def initialize(x=0, y=0)
-			@x = x;  @y = y
+			super(x,y)
 		end
 		
 		# Points are the same when their coordinates are equal.
-		def ==(other)
-			@x == other.x and @y == other.y
+		# ### Not needed anymore, since `Struct` defines it already. Remove in next commit. ###
+		#def ==(other)
+		#	@x == other.x and @y == other.y
+		#end
+		
+		# Convert to string.
+		def to_s
+			"#{x},#{y}"
 		end
 		
-		# Might be useful sometimes.
+		# Convert to array.
 		def to_a
-			return [@x, @y]
+			return [x, y]
 		end
+		
 	end
 	
 end  # module Geom

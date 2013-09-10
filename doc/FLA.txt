@@ -1,5 +1,5 @@
-FLA FILE FORMAT DESCRIPTION (REVERSE-ENGINEERED)
-""""""""""""""""""""""""""""""""""""""""""""""""
+XFL (UNCOMPRESSED FLA) FILE FORMAT DESCRIPTION; REVERSE-ENGINEERED
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 XFL files (with `.xfl` extension) are custom flavor XML syntax files which store Adobe Flash projects' uncompressed data.
 
 All library symbols are stored in separate XFL files.
@@ -53,11 +53,12 @@ They all reside inside the `elements` element. There could be two kinds of them:
 	Common edges are stored only once, as a single `Edge` element, and they are shared by two fill shapes.
 	If a particular filled region neighbors with several others, its contour is divided into several separate edges
 	at the points where more than two colors meet. Each edge between only two filled regions.
+	(See attached `doc/FlashEdges.png` for depiction of this technique.)
 	The `fillStyle0` and `fillStyle1` attributes refer to the fill styles on the left and right of the common edge, respectively.
 	The `strokeStyle` atribute describes the stroke style for the line. Styles are defined inside the `StrokeStyle` elements.
 	
 	The `edges` atribute of the `Edge` element contains a character string describing the shape of the edge.
-	It is a stream of vector commands along with numerical coordinates which are parameters to them.
+	It is a stream of vector commands along with opcodes and numerical coordinates which are parameters for them.
 	
 	Coordinate numbers
 	''''''''''''''''''
