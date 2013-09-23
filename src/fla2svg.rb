@@ -11,24 +11,7 @@ puts "Report any bugs to #{APP_EMAIL}."
 puts
 
 
-# Some tests of the new classes for commands and points.
-# TODO: These tests are no longer needed. Scheduled for remove with next commit.
-# FIXME: Relative paths shoudl be relative to the script, not the current working directory.
-require './geom'
-require './XFL/edge'
-require './XFL/commands'
-
-include XFL
-include Geom
-
-p mt = Command::MoveTo.new(10,20)
-p lt = Command::LineTo.new( [10,20] )
-p ct = Command::CurveTo.new( Point.new(30,40), Point.new(50,60) )
-print 'Same endpoints for MoveTo and LineTo? ';  p mt.endPoint == lt.endPoint
-print 'Same endpoints for MoveTo and CurveTo? '; p mt.endPoint == ct.endPoint
-puts
-
-# Now it's time to read some data from the XFL file.
+# Read some data from the XFL file.
 
 filename = '../TestData/Hair.xml'
 
@@ -43,39 +26,28 @@ doc = parser.parse
 doc.root.namespaces.default_prefix = 'xfl'
 
 
+# FIXME: Relative paths should be relative to the script, not the current working directory.
+require './XFL/edge'
+include XFL
+
 # Load edges from XFL.
 sym = XFL::Symbol.fromXFL(doc)
-edges = sym.edges
+edge = sym.edges[0]
+edgeData = edge.commands  # Let's try it on the first edge.
 
-
-# For starters, let's just read the edge data into a nested array of commands.
-# Each command is an array of the form: `[ opcode, *parameters ]`
-# where `parameters` is just a series of coordinate numbers.
-# We will also use Ruby symbols for the opcodes, for better readability and efficiency.
-
-# Let's try it on the first edge.
-edgeData = edges[0]['edges']
-
-puts "\nConverting this:"
-p edgeData
-
-puts "\ninto this:"
-edge = Edge.new(edgeData)
-p edge.commands
-
+puts "\nFirst edge loaded:\n#{edge.commands.inspect}"
 
 # Simplify the path data.
 edge.simplifyPath!
-puts "\nAfter simplification:"
-p edgeArr = edge.commands
+puts "\nand simplified:\n#{edge.commands}"
 
-puts "\nThis path goes from (#{edge.startPoint}) to (#{edge.endPoint})"
+puts "\nThis edge goes from (#{edge.startPoint}) to (#{edge.endPoint})"
 
 
 # Let's try to spit it out as SVG path.
 require './SVG/path'
 puts "\nConverting to SVG path:"
-pathElem = SVG::path(edgeArr)
+pathElem = SVG::path(edge.commands)
 p pathElem
 
 
