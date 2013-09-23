@@ -1,4 +1,4 @@
-require_relative '../geom'
+require 'geom'
 
 module XFL module Command
 	

@@ -1,3 +1,7 @@
-Added `Edge#reverse` for reversing the edge's direction.
-Also we can now read the symbol name.
-Some minor simplifications and cleanup.
+Initial code for reading fill styles from XFL files.
+For now, it can read only solid colors.
+When generating an SVG path element, we use the edge's right-side fill style color for the interior of the path.
+(Just for now. In a future we'll interpret other fill styles too and generate correct filled shapes.)
+Filename of the XFL file can be now specified from the command line.
+If the given file cannot be found, an appropriate error message is displayed.
+Also, the require paths bug has been corrected by adding the top-level script's path to the `$LOAD_PATH`.

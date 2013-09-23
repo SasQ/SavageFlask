@@ -1,14 +1,17 @@
-require_relative 'commands'   # available since Ruby 1.9.2
+require 'XFL/commands'
 
 # Handling edges.
 module XFL
 	
 	# Edge data.
-	class Edge < Struct.new(:commands)
+	class Edge < Struct.new(:commands, :leftFill, :rightFill)
 		
 		# Load from XFL `Edge` element.
-		def self.fromXFL(edge)
-			self.new( edgeData2arr( edge['edges'] ) )
+		def self.fromXFL(edgeElem, fills)
+			edge = self.new( edgeData2arr( edgeElem['edges'] ) )
+			edge.leftFill  = fills[ edgeElem['fillStyle0'].to_i - 1 ] if edgeElem['fillStyle0']
+			edge.rightFill = fills[ edgeElem['fillStyle1'].to_i - 1 ] if edgeElem['fillStyle1']
+			edge
 		end
 		
 		# Starting point of the edge.
@@ -69,7 +72,7 @@ module XFL
 				cmd.endPoint = from
 				revEdge << cmd
 			end
-			Edge.new(revEdge)#, @leftFill, @rightFill)
+			Edge.new(revEdge, leftFill, rightFill)
 		end
 		
 		
@@ -77,4 +80,4 @@ module XFL
 		
 	end  # class Edge
 	
-end  # module XFL::Edge
+end  # module XFL
