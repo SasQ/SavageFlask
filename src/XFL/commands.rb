@@ -2,7 +2,7 @@ require_relative '../geom'
 
 module XFL module Command
 	
-	Point = ::Geom::Point
+	Point = ::Geom::Point  # Just an alias for convenience.
 	
 	class MoveTo < Struct.new(:endPoint)
 		

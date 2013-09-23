@@ -1,5 +1,9 @@
-Changing Commands and `Geom::Point` to derive from `Struct` to further clean up the design.
-Pretty printing for Commands.
-
-Documentation:
-Added a picture explaining the shared edges technique used by Flash to store common edge data.
+Refactoring `Edge` into a class, stage 1.
+Module `Edge` has been converted into a class.
+This will allow creating many instances and storing their own commands with them, instead of separately.
+Which has been module methods, now they are instance methods which manipulate the instance data.
+Two additional methods, `startPoint` and `endPoint`, can obtain the coordinates of the beginning and end of an edge.
+Main source file has been updated to use this new class.
+A new class `Symbol` has been added.
+It will be used to read a library symbol from the XFL file and parse its data (edges, fills etc.).
+The code for loading edges and managing them will be factored out into this class soon.

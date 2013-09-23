@@ -8,12 +8,6 @@ module Geom
 			super(x,y)
 		end
 		
-		# Points are the same when their coordinates are equal.
-		# ### Not needed anymore, since `Struct` defines it already. Remove in next commit. ###
-		#def ==(other)
-		#	@x == other.x and @y == other.y
-		#end
-		
 		# Convert to string.
 		def to_s
 			"#{x},#{y}"
@@ -21,7 +15,7 @@ module Geom
 		
 		# Convert to array.
 		def to_a
-			return [x, y]
+			[x, y]
 		end
 		
 	end

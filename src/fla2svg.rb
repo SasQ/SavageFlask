@@ -11,24 +11,9 @@ puts "Report any bugs to #{APP_EMAIL}."
 puts
 
 
-filename = '../TestData/Hair.xml'
-
-require 'xml'
-
-# Open the XFL file and parse its content.
-parser = XML::Parser.file(filename)
-doc = parser.parse
-
-
-# NOTICE: XFL elements live in a namespace.
-# We need to set it up as the default namespace for XPath queries to work.
-doc.root.namespaces.default_prefix = 'xfl'
-
-# Find all `Edge` elements with `edges` attribute.
-edges = doc.root.find('//xfl:Edge[@edges]')
-
-
 # Some tests of the new classes for commands and points.
+# TODO: These tests are no longer needed. Scheduled for remove with next commit.
+# FIXME: Relative paths shoudl be relative to the script, not the current working directory.
 require './geom'
 require './XFL/edge'
 require './XFL/commands'
@@ -43,14 +28,30 @@ print 'Same endpoints for MoveTo and LineTo? ';  p mt.endPoint == lt.endPoint
 print 'Same endpoints for MoveTo and CurveTo? '; p mt.endPoint == ct.endPoint
 puts
 
+# Now it's time to read some data from the XFL file.
+
+filename = '../TestData/Hair.xml'
+
+require 'xml'
+
+# Open the XFL file and parse its content.
+parser = XML::Parser.file(filename)
+doc = parser.parse
+
+# NOTICE: XFL elements live in a namespace.
+# We need to set it up as the default namespace for XPath queries to work.
+doc.root.namespaces.default_prefix = 'xfl'
+
+
+# Load edges from XFL.
+sym = XFL::Symbol.fromXFL(doc)
+edges = sym.edges
+
 
 # For starters, let's just read the edge data into a nested array of commands.
 # Each command is an array of the form: `[ opcode, *parameters ]`
 # where `parameters` is just a series of coordinate numbers.
 # We will also use Ruby symbols for the opcodes, for better readability and efficiency.
-
-puts "Edges:"
-edges.each { |edge| p edge }
 
 # Let's try it on the first edge.
 edgeData = edges[0]['edges']
@@ -59,12 +60,16 @@ puts "\nConverting this:"
 p edgeData
 
 puts "\ninto this:"
-edgeArr = Edge::edgeData2arr(edgeData)
-p edgeArr
+edge = Edge.new(edgeData)
+p edge.commands
 
 
 # Simplify the path data.
-Edge::simplifyPath!(edgeArr)
+edge.simplifyPath!
+puts "\nAfter simplification:"
+p edgeArr = edge.commands
+
+puts "\nThis path goes from (#{edge.startPoint}) to (#{edge.endPoint})"
 
 
 # Let's try to spit it out as SVG path.
@@ -74,4 +79,4 @@ pathElem = SVG::path(edgeArr)
 p pathElem
 
 
-# TODO: Next step: Commands as objects maybe?
+# TODO: Next step: Edges as objects.
