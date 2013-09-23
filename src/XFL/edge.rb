@@ -6,21 +6,24 @@ module XFL
 	# Edge data.
 	class Edge < Struct.new(:commands)
 		
-		def initialize(edgeData)
-			super( edgeData2arr(edgeData) )
+		# Load from XFL `Edge` element.
+		def self.fromXFL(edge)
+			self.new( edgeData2arr( edge['edges'] ) )
 		end
 		
+		# Starting point of the edge.
 		def startPoint
 			commands[0].endPoint
 		end
 		
+		# Ending point of the edge.
 		def endPoint
 			commands[-1].endPoint
 		end
 		
 		
 		# Converts 32-bit fixed-point number from hexadecimal string to its corresponding number.
-		# TODO: Account for incomplete fractional bytes.
+		# FIXME: Account for incomplete fractional bytes.
 		def self.hexToNum(hexstr)
 			num = hexstr.gsub('.','').hex
 			num = (num >= '80000000'.hex)  ?  -('FFFFFFFF'.hex - num + 1)  :  num
@@ -30,7 +33,8 @@ module XFL
 		
 		# Read XFL edge data string into an array of Commands (returned).
 		# Numbers are decoded as floating point values with correct scale.
-		def edgeData2arr(edgeData)
+		# TODO: Hmm... This could be a constructor as well...
+		def self.edgeData2arr(edgeData)
 			edgeData.scan( /([!|\/\[])([^!|\/\[]+)/ ).map do |opcode,params|
 				numbers = params.scan( /(#?)(\S+)\s*/ ).map do |prefix,number|
 					prefix == '#'  ?  hexToNum(number)  :  number.to_f / 20
@@ -44,10 +48,10 @@ module XFL
 		end
 		
 		
-		# Simplify the edge data:
+		# Simplify the edge commands:
 		# If a `moveTo` command has the same coordinates as the endpoint of the preceding command,
 		# it is redundant and can be safely removed.
-		def simplifyPath!
+		def simplify!
 			commands.each_with_index do |cmd,index|
 				next unless cmd.is_a?(Command::MoveTo) or index > 0
 				prevCmd = commands[index-1]
@@ -56,8 +60,20 @@ module XFL
 		end
 		
 		
-		private_class_method :hexToNum
-		private :edgeData2arr
+		# Generate commands for an edge with its direction reversed.
+		def reverse
+			revEdge = [ Command::MoveTo.new(endPoint) ]
+			revCmds = commands.reverse  # reverses an array of commands.
+			revCmds[0..-2].each_with_index do |cmd,index|
+				from = revCmds[index+1].endPoint
+				cmd.endPoint = from
+				revEdge << cmd
+			end
+			Edge.new(revEdge)#, @leftFill, @rightFill)
+		end
+		
+		
+		private_class_method :hexToNum, :edgeData2arr
 		
 	end  # class Edge
 	

@@ -1,2 +1,3 @@
-Refactoring `Edge` into a class, stage 3 (final).
-`Symbol` class moved to a separate source file for better clarity.
+Added `Edge#reverse` for reversing the edge's direction.
+Also we can now read the symbol name.
+Some minor simplifications and cleanup.

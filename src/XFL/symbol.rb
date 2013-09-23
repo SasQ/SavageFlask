@@ -5,21 +5,14 @@ require_relative 'edge'
 module XFL
 	
 	# Library symbol.
-	class Symbol < Struct.new(:edges)
+	class Symbol < Struct.new(:name, :edges)
 		
+# 		# Load from XFL document.
 		def self.fromXFL(doc)
-			# Find all `Edge` elements with `edges` attribute.
-			edges = doc.root.find('//xfl:Edge[@edges]')
-				puts "Edges in the XFL file:"  # Just for debug. It will be removed in next commit.
-				edges.each { |edge| p edge }
-			
-			# Construct an `Edge` object from each `Edge` element.
-			edges = edges.map { |edge| Edge.new( edge['edges'] ) }
-			
-			# Return new element filled with these data.
-			sym = self.new
-			sym.edges = edges
-			sym
+			self.new(
+				doc.root['name'],
+				doc.root.find('//xfl:Edge[@edges]').map { |edge| Edge::fromXFL(edge) }
+			)
 		end
 		
 	end  # class Symbol

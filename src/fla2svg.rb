@@ -31,18 +31,28 @@ require './XFL/symbol'
 require './XFL/edge'
 include XFL
 
-# Load edges from XFL.
+# Load symbol from XFL.
 sym = XFL::Symbol.fromXFL(doc)
+
+puts "Symbol name:\n#{sym.name}"
+
+# Load edges from XFL.
 edge = sym.edges[0]
 edgeData = edge.commands  # Let's try it on the first edge.
 
 puts "\nFirst edge loaded:\n#{edge.commands.inspect}"
 
 # Simplify the path data.
-edge.simplifyPath!
+edge.simplify!
 puts "\nand simplified:\n#{edge.commands}"
 
 puts "\nThis edge goes from (#{edge.startPoint}) to (#{edge.endPoint})"
+
+
+# Test for reversing the path.
+revEdge = edge.reverse
+puts "\nReversed version of this edge:\n#{revEdge.commands}"
+puts "\nThis edge goes from (#{revEdge.startPoint}) to (#{revEdge.endPoint})"
 
 
 # Let's try to spit it out as SVG path.
@@ -52,4 +62,4 @@ pathElem = SVG::path(edge.commands)
 p pathElem
 
 
-# TODO: Next step: Edges as objects.
+# TODO: Next step: Loading fills from XFL (we will need them for finding filled areas).
