@@ -27,6 +27,7 @@ doc.root.namespaces.default_prefix = 'xfl'
 
 
 # FIXME: Relative paths should be relative to the script, not the current working directory.
+require './XFL/symbol'
 require './XFL/edge'
 include XFL
 

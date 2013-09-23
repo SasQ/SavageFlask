@@ -1,2 +1,2 @@
-Refactoring `Edge` into a class, stage 2.
-Now edges are stored in `Symbol` instances as `Edge` objects, which simplified the main source file a lot.
+Refactoring `Edge` into a class, stage 3 (final).
+`Symbol` class moved to a separate source file for better clarity.
