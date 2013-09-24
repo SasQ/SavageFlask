@@ -88,7 +88,7 @@ p pathElem
 def printAreas(areas)
 	areas.each do |key,value|
 		print key.to_a[0][1]; puts ':'
-		value.each { |edge| puts "#{edge.commands}" }
+		value.each { |edgeCmds| puts "#{edgeCmds}" }
 		puts
 	end
 end
