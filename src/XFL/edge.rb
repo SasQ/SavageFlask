@@ -87,6 +87,11 @@ module XFL
 		end
 		
 		
+		def closed?
+			self.endPoint == self.startPoint
+		end
+		
+		
 		private_class_method :hexToNum, :edgeData2arr
 		
 	end  # class Edge

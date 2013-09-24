@@ -1,10 +1,17 @@
-It turned out that using full `Edge` objects in edge groups is useful, since it helps handling them:
-It's easier to ask them questions about their begin and end points when searching for their continuations.
-It also allowed us to delegate the code for joining edges together into the `Edge` class, which is good design.
-`src/SVG/path.rb` has been modified to use the LEFT fill style instead of RIGHT as the filled area's fill color.
+Finding filled areas is finally done! :-D
+`Symbol#filledRegions` does that by unsharing edges and grouping them by their fill styles.
+Then, `Symbol#findContours` is being called on each group of edges having the same fill style on their left.
+It calls `Symbol#findContour` to find all segments of the whole closed contour, join them in order, and remove them from the group.
+It uses `Symbol#findConnectedTo` to find the index of the next part of the contour in sequence (connected to the contour found so far).
 
-Added some test of joining edges into contours:
-Use the `Horn.xml` XFL file from the `TestData` directory and see what will happen.
-You can check the generated `<path>` SVG element for the filled area in the `test.svg` file inside `TestOutputs` directory.
-Just drag&drop it into your web browser's window to see the generated filled area (it's a fragment of Twilight Sparkle's mane).
-Now we only need to automate this process somehow...
+When all closed contours of the filled regions are found, they are converted to SVG paths.
+
+The test code which was no longer necessary has been wiped out from the main source file to clarify it somewhat.
+
+To test how it works, call this script with the first command line parameter set to some XFL file.
+Sample test files are stored in `TestData` directory, so you can use those.
+
+Sample SVG file has been merged from the outputs for these XFL test files to show that it really works.
+You can find it in `TestOutputs` directory.
+Just drag&drop it into your web browser's window to see it.
+You should see some parts of Twilight Sparkle's puppet randomly distributed on the SVG canvas.

@@ -39,8 +39,40 @@ module XFL
 		end
 		
 		
-		# Get filled areas.
-		def filledAreas
+		# Search in the array of `edges` to find the edge which starts where the given edge ends.
+		# If found, the edge is removed from the original array.
+		def findConnectedTo(prevEdge,edges)
+			edges.each_with_index do |edge,index|
+				return index  if edge.startPoint == prevEdge.endPoint
+			end
+			-1
+		end
+		
+		
+		# Find the segments of a closed contour and join them together in the correct order.
+		# The contour found is then removed from the group.
+		def findContour(group)
+			contour = group.delete_at(0)
+			while !contour.closed? and group.length > 0 and at = findConnectedTo(contour,group)
+				contour = contour.append( group[at] )
+				group.delete_at(at)
+			end
+			contour
+		end
+		
+		
+		# Find all closed contours in a given edge group.
+		def findContours(group)
+			contours = []
+			while group.length > 0
+				contours << findContour(group)
+			end
+			contours
+		end
+		
+		
+		# Get filled regions.
+		def filledRegions
 			# First, we need to unshare the common edges by duplicating them for both fills (left and right).
 			# To facilitate grouping of these edges, we already sort them by their fill styles.
 			edgeGroups = {}
@@ -48,7 +80,13 @@ module XFL
 				addEdgeToGroup(edgeGroups, edge.leftFill,  edge)          if edge.leftFill  != nil
 				addEdgeToGroup(edgeGroups, edge.rightFill, edge.reverse)  if edge.rightFill != nil
 			end
-			edgeGroups
+			
+			# Next, we need to join fragments of closed contours together in the correct order.
+			filledRegs = {}
+			edgeGroups.each do |fillStyle,group|
+				filledRegs[fillStyle] = findContours(group)
+			end
+			filledRegs
 		end
 		
 	end  # class Symbol
