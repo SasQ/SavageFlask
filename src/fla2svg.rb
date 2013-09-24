@@ -59,36 +59,17 @@ puts "\nSymbol name:\n#{sym.name}"
 puts "\nFound fill styles:\n#{sym.fillStyles}"
 
 
-# Load edges from XFL.
-edge = sym.edges[0]
-edgeData = edge.commands  # Let's try it on the first edge.
-
-puts "\nFirst edge loaded:\n#{edge.commands.inspect}"
-
-# Simplify the path data.
-edge.simplify!
-puts "\nand simplified:\n#{edge.commands}"
-
-puts "\nThis edge goes from (#{edge.startPoint}) to (#{edge.endPoint})"
-
-
-# Test for reversing the path.
-revEdge = edge.reverse
-puts "\nReversed version of this edge:\n#{revEdge.commands}"
-puts "\nThis edge goes from (#{revEdge.startPoint}) to (#{revEdge.endPoint})"
-
 # Let's try to spit it out as SVG path.
 require 'SVG/path'
 puts "\nConverting to SVG path:"
-pathElem = SVG::path(edge)
-p pathElem
+p pathElem = SVG::path( sym.edges[0] )
 
 
 # Just for debug: pretty-printing.
 def printAreas(areas)
 	areas.each do |key,value|
 		print key.to_a[0][1]; puts ':'
-		value.each { |edgeCmds| puts "#{edgeCmds}" }
+		value.each { |edge| puts "#{edge.commands}" }
 		puts
 	end
 end
@@ -96,7 +77,17 @@ end
 
 # Test for finding filled areas.
 puts "\nFilled areas:\n\n"
-printAreas( sym.filledAreas )
+areas = sym.filledAreas
+printAreas(areas)
+
+# Test for joining the filled region's contour.
+puts "\nLet's try to join some contour for one filled area:"
+edgeGroup = areas[ sym.fillStyles[0] ]
+contour = edgeGroup[0].append(edgeGroup[1]).append(edgeGroup[2]).append(edgeGroup[3]).append(edgeGroup[4]).append(edgeGroup[5])
+p contour
+
+puts "\nand convert it to SVG path:"
+p SVG::path(contour)
 
 
 # TODO: Next step: Finding filled areas.

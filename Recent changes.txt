@@ -1,1 +1,10 @@
-Just some pretty-printing of the edge groups array for debugging purposes.
+It turned out that using full `Edge` objects in edge groups is useful, since it helps handling them:
+It's easier to ask them questions about their begin and end points when searching for their continuations.
+It also allowed us to delegate the code for joining edges together into the `Edge` class, which is good design.
+`src/SVG/path.rb` has been modified to use the LEFT fill style instead of RIGHT as the filled area's fill color.
+
+Added some test of joining edges into contours:
+Use the `Horn.xml` XFL file from the `TestData` directory and see what will happen.
+You can check the generated `<path>` SVG element for the filled area in the `test.svg` file inside `TestOutputs` directory.
+Just drag&drop it into your web browser's window to see the generated filled area (it's a fragment of Twilight Sparkle's mane).
+Now we only need to automate this process somehow...

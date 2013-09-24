@@ -45,8 +45,8 @@ module XFL
 			# To facilitate grouping of these edges, we already sort them by their fill styles.
 			edgeGroups = {}
 			edges.each do |edge|
-				addEdgeToGroup(edgeGroups, edge.leftFill,  edge.commands)          if edge.leftFill  != nil
-				addEdgeToGroup(edgeGroups, edge.rightFill, edge.reverse.commands)  if edge.rightFill != nil
+				addEdgeToGroup(edgeGroups, edge.leftFill,  edge)          if edge.leftFill  != nil
+				addEdgeToGroup(edgeGroups, edge.rightFill, edge.reverse)  if edge.rightFill != nil
 			end
 			edgeGroups
 		end

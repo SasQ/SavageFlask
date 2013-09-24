@@ -77,6 +77,16 @@ module XFL
 		end
 		
 		
+		# Append the given edge at the end of the current edge.
+		# We assume that the other one begins when the current one ends.
+		# We also retain the current edge's fill styles. The other edge's fill styles will be lost.
+		def append(otherEdge)
+			result = self.dup
+			result.commands += otherEdge.commands[1..-1]
+			result
+		end
+		
+		
 		private_class_method :hexToNum, :edgeData2arr
 		
 	end  # class Edge

@@ -29,8 +29,8 @@ module SVG
 	# Create an SVG path element from the given `Edge` object.
 	def SVG.path(edge)
 		pathElem = XML::Node.new('path')
-		if edge.rightFill != nil and edge.rightFill.has_key?(:color)
-			pathElem['fill'] = edge.rightFill[:color]
+		if edge.leftFill != nil and edge.leftFill.has_key?(:color)
+			pathElem['fill'] = edge.leftFill[:color]
 		end
 		pathElem['d'] = edge.commands.map { |cmd| cmd.toSVG }.join(' ')
 		pathElem
