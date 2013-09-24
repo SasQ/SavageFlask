@@ -84,9 +84,19 @@ pathElem = SVG::path(edge)
 p pathElem
 
 
+# Just for debug: pretty-printing.
+def printAreas(areas)
+	areas.each do |key,value|
+		print key.to_a[0][1]; puts ':'
+		value.each { |edge| puts "#{edge.commands}" }
+		puts
+	end
+end
+
+
 # Test for finding filled areas.
-puts "\nFilled areas:"
-p sym.filledAreas
+puts "\nFilled areas:\n\n"
+printAreas( sym.filledAreas )
 
 
 # TODO: Next step: Finding filled areas.

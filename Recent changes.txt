@@ -1,6 +1,1 @@
-Corrected aliasing-related bugs in `Edge#reverse` and `Edge#simplify`.
-Initial code for finding filled areas.
-First we unshare the edges that they could be used as edges in separate filled shapes.
-One edge is forward, the other one is backward, to keep their appropriate fill styles always on their left side.
-Then we group them by fill style to prepare for joining their contours into closed fill areas.
-(This will be dealt with next time, hopefully.)
+Just some pretty-printing of the edge groups array for debugging purposes.
