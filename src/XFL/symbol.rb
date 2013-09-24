@@ -14,6 +14,7 @@ module XFL
 			self.new( doc.root['name'], edges, fills )
 		end
 		
+		
 		# Read fill styles.
 		# For now, it only reads solid colors as hashes in a form `{ :color => '#RRGGBB' }`.
 		# TODO: Reading more complex types of fill styles as well.
@@ -27,6 +28,27 @@ module XFL
 				end
 			end
 			fills
+		end
+		
+		
+		# Adds the given edge to the group for the given fill style.
+		# If the style doesn't exist yet, a new empty group (an array) is created for it on-the-fly.
+		def addEdgeToGroup(edgeGroups,group,edge)
+			edgeGroups[group] = []  if !edgeGroups.has_key?(group)  # Prepare new array if this is a new group.
+			edgeGroups[group] << edge
+		end
+		
+		
+		# Get filled areas.
+		def filledAreas
+			# First, we need to unshare the common edges by duplicating them for both fills (left and right).
+			# To facilitate grouping of these edges, we already sort them by their fill styles.
+			edgeGroups = {}
+			edges.each do |edge|
+				addEdgeToGroup(edgeGroups, edge.leftFill,  edge)          if edge.leftFill  != nil
+				addEdgeToGroup(edgeGroups, edge.rightFill, edge.reverse)  if edge.rightFill != nil
+			end
+			edgeGroups
 		end
 		
 	end  # class Symbol

@@ -8,10 +8,10 @@ module XFL
 		
 		# Load from XFL `Edge` element.
 		def self.fromXFL(edgeElem, fills)
-			edge = self.new( edgeData2arr( edgeElem['edges'] ) )
+			edge = Edge.new( edgeData2arr( edgeElem['edges'] ) )
 			edge.leftFill  = fills[ edgeElem['fillStyle0'].to_i - 1 ] if edgeElem['fillStyle0']
 			edge.rightFill = fills[ edgeElem['fillStyle1'].to_i - 1 ] if edgeElem['fillStyle1']
-			edge
+			edge.simplify!
 		end
 		
 		# Starting point of the edge.
@@ -56,10 +56,11 @@ module XFL
 		# it is redundant and can be safely removed.
 		def simplify!
 			commands.each_with_index do |cmd,index|
-				next unless cmd.is_a?(Command::MoveTo) or index > 0
+				next unless cmd.is_a?(Command::MoveTo) and index > 0
 				prevCmd = commands[index-1]
 				commands.delete_at(index) if prevCmd.endPoint == cmd.endPoint
 			end
+			self
 		end
 		
 		
@@ -68,11 +69,11 @@ module XFL
 			revEdge = [ Command::MoveTo.new(endPoint) ]
 			revCmds = commands.reverse  # reverses an array of commands.
 			revCmds[0..-2].each_with_index do |cmd,index|
-				from = revCmds[index+1].endPoint
-				cmd.endPoint = from
-				revEdge << cmd
+				newCmd = cmd.dup
+				newCmd.endPoint = revCmds[index+1].endPoint
+				revEdge << newCmd
 			end
-			Edge.new(revEdge, leftFill, rightFill)
+			Edge.new(revEdge, rightFill, leftFill)  # We also need to flip the fill styles.
 		end
 		
 		

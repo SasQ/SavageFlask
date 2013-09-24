@@ -1,7 +1,6 @@
-Initial code for reading fill styles from XFL files.
-For now, it can read only solid colors.
-When generating an SVG path element, we use the edge's right-side fill style color for the interior of the path.
-(Just for now. In a future we'll interpret other fill styles too and generate correct filled shapes.)
-Filename of the XFL file can be now specified from the command line.
-If the given file cannot be found, an appropriate error message is displayed.
-Also, the require paths bug has been corrected by adding the top-level script's path to the `$LOAD_PATH`.
+Corrected aliasing-related bugs in `Edge#reverse` and `Edge#simplify`.
+Initial code for finding filled areas.
+First we unshare the edges that they could be used as edges in separate filled shapes.
+One edge is forward, the other one is backward, to keep their appropriate fill styles always on their left side.
+Then we group them by fill style to prepare for joining their contours into closed fill areas.
+(This will be dealt with next time, hopefully.)

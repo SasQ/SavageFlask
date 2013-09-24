@@ -77,7 +77,6 @@ revEdge = edge.reverse
 puts "\nReversed version of this edge:\n#{revEdge.commands}"
 puts "\nThis edge goes from (#{revEdge.startPoint}) to (#{revEdge.endPoint})"
 
-
 # Let's try to spit it out as SVG path.
 require 'SVG/path'
 puts "\nConverting to SVG path:"
@@ -85,4 +84,9 @@ pathElem = SVG::path(edge)
 p pathElem
 
 
-# TODO: Next step: Loading fills from XFL (we will need them for finding filled areas).
+# Test for finding filled areas.
+puts "\nFilled areas:"
+p sym.filledAreas
+
+
+# TODO: Next step: Finding filled areas.
