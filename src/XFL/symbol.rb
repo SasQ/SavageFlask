@@ -24,7 +24,8 @@ module XFL
 				if elem.name == 'FillStyle' then
 					index = elem['index'].to_i - 1
 					color = elem.find_first('xfl:SolidColor')
-					fills[index] = { :color => color['color'] }  if color
+					fills[index] = { :color => '#000000' }
+					fills[index] = { :color => color['color'] }  if color and color['color']
 				end
 			end
 			fills
